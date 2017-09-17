@@ -3,6 +3,7 @@
 #include "MKL25Z4.h"
 #include "mma8451.h"
 #include "tpm.h"
+#include "ws2812.h"
 
 #ifdef __cplusplus
 #define CDECL extern "C" 
@@ -136,9 +137,8 @@ int main(){
 	tpm_init(1);
 //	tpm_program();
 	
-	tpm_type_pwm(1,0,96,96);
 	tpm = tpm_type_delay(0);
-	tpm_type_intr_enable(1);
+	ws2812_init();
 
 //	while(1){
 //		tpm_delayticks(tpm,30);
@@ -154,7 +154,7 @@ int main(){
 	while(1){
 		if(mytick == last_tick){
 			//tpm_test();
-			ledbuf[0] += 8;
+			ws2812_test();
 			last_tick = mytick + 1000;
 			xval = mma8451_xval();
 			yval = mma8451_yval();
