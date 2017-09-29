@@ -10,20 +10,31 @@ CC=$(PREFIX)-gcc
 CXX=$(PREFIX)-g++
 LD=$(PREFIX)-gcc
 
-OBJS=test.o startup.o i2c.o mma8451.o tpm.o ws2812.o color_convert.o
+OBJS=main.o startup.o i2c.o mma8451.o tpm.o ws2812.o color_convert.o
 KINETIS_OBJS=kl2xx/system_MKL25Z4.o 
 LINKER_SCRIPTS=linker.ld
 
-test.elf: $(OBJS) $(KINETIS_OBJS)
-	$(LD) $(CFLAGS) -o $@ $^ -T $(LINKER_SCRIPTS) -Xlinker -Map=test.map
+nixieglam.elf: $(OBJS) $(KINETIS_OBJS)
+	$(LD) $(CFLAGS) -o $@ $^ -T $(LINKER_SCRIPTS) -Xlinker -Map=nixieglam.map
 
-dump: test.elf
+dump: nixieglam.elf
 	$(PREFIX)-objdump -h $^
 	#$(PREFIX)-readelf -S $^
 
-debug: test.elf
+debug: nixieglam.elf
+	$(PREFIX)-gdb -ex "target remote | openocd -p -f board/frdm-kl25z.cfg" -ex "load" $^
+
+test.elf: test.o startup.o $(KINETIS_OBJS)
+	$(LD) $(CFLAGS) -o $@ $^ -T $(LINKER_SCRIPTS) -Xlinker -Map=test.map
+
+dumptest: test.elf
+	$(PREFIX)-objdump -h $^
+	$(PREFIX)-readelf -S $^
+
+debugtest: test.elf
 	$(PREFIX)-gdb -ex "target remote | openocd -p -f board/frdm-kl25z.cfg" -ex "load" $^
 
 clean:
-	$(RM) *.o test.elf
+	$(RM) *.o *.elf
 	$(RM) kl2xx/*.o
+	$(RM) *.map
