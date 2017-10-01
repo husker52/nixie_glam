@@ -6,4 +6,5 @@ extern void ws2812_init(void);
 extern void ws2812_latch(void);
 extern void ws2812_write(uint8_t *data, uint16_t len);
 extern void ws2812_byte_write(uint8_t byte);
+extern void ws2812_test(void);
 #endif // _WS2812_H_
