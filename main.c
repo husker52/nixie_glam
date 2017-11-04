@@ -158,7 +158,7 @@ int main(){
 		if(mytick == last_tick){
 			//tpm_test();
 			ws2812_test();
-			last_tick = mytick + 1000;
+			last_tick = mytick + 100;
 			xval = mma8451_xval();
 			yval = mma8451_yval();
 			zval = mma8451_zval();

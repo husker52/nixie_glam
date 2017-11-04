@@ -1,10 +1,22 @@
 #include "ws2812.h"
 #include "tpm.h"
 
-#define NUM_LEDS 2
+#define NUM_LEDS 10
 #define LEDBUF_LEN 3*NUM_LEDS
 
-uint8_t ledbuf[LEDBUF_LEN] = {0,0,0,0xff,0x00,0x00};
+uint8_t ledbuf[LEDBUF_LEN] = {
+	0,0,0,
+	64,0,0,
+	64,64,64,
+	0,0,0,
+	0,0,0,
+	0,0,0,
+	0,0,0,
+	0,0,0,
+	0,0,0,
+	0,0,0
+};
+
 uint8_t ledbit = 0;
 uint16_t led_ptr = 0;
 uint8_t led_lat = 0;
@@ -49,15 +61,14 @@ void ws2812_test(void){
 	static uint8_t lednum = 0;
 
 	switch(lednum){
-		case 0:
-		case 1:
+		case 0 ... 28:
 			ledbuf[lednum] += 64;
 			if( ledbuf[lednum] == 0){
 				lednum++;
 				ledbuf[lednum] += 64;
 			}
 			break;
-		case 2:
+		case 29:
 			ledbuf[lednum] += 64;
 			if( ledbuf[lednum] == 0){
 				lednum = 0;
