@@ -4,6 +4,7 @@
 #include "mma8451.h"
 #include "tpm.h"
 #include "ws2812.h"
+#include "usb.h"
 
 #ifdef __cplusplus
 #define CDECL extern "C" 
@@ -37,6 +38,7 @@ TPM_Type __attribute__((section(".periph.tpm0"))) tpm0;
 TPM_Type __attribute__((section(".periph.tpm1"))) tpm1;
 TPM_Type __attribute__((section(".periph.tpm2"))) tpm2;
 MCG_Type __attribute__((section(".periph.mcg"))) mcg;
+USB_Type __attribute__((section(".periph.usb"))) usb;
 
 
 uint32_t mySysTick_Config(uint32_t ticks);
@@ -135,6 +137,7 @@ int main(){
 //	}
 	tpm_init(0);
 	tpm_init(1);
+	usb_init();
 //	tpm_program();
 	
 	tpm = tpm_type_delay(0);

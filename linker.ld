@@ -136,6 +136,8 @@ SECTIONS
 		*(.periph.i2c1)
 		. = periph_begin + 4k*(106);
 		*(.periph.uart0)
+		. = periph_begin + 4k*(114);
+		*(.periph.usb)
 
 
 

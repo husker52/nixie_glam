@@ -10,7 +10,7 @@ CC=$(PREFIX)-gcc
 CXX=$(PREFIX)-g++
 LD=$(PREFIX)-gcc
 
-OBJS=main.o startup.o i2c.o mma8451.o tpm.o ws2812.o color_convert.o
+OBJS=main.o startup.o i2c.o mma8451.o tpm.o ws2812.o color_convert.o usb.o
 KINETIS_OBJS=kl2xx/system_MKL25Z4.o 
 LINKER_SCRIPTS=linker.ld
 
